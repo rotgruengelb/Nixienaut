@@ -58,7 +58,7 @@ jobs:
           OSSRH_PASSWORD: ${{secrets.OSSRH_TOKEN}}
           OSSRH_URL: "https://s01.oss.sonatype.org/content/repositories/snapshots/"
           PUBLISH_TYPE: "SNAPSHOT"
-          COMMIT_ID: ${{github.head_ref}}-${{github.sha}}
+          COMMIT_ID: ${{github.sha}}
 
       # Step 8
       # Optional step, will enable you to see what you have released as well here on GitHub
