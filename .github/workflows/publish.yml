@@ -54,14 +54,13 @@ jobs:
       # Obviously required step
       - name: Publish package
         # wrapped the signing.password with single quotes as the password could contain special characters
-        run: ./gradlew publish -Psigning.keyId=${{secrets.OSSRH_GPG_SECRET_KEY_ID}} -Psigning.password='${{secrets.OSSRH_GPG_SECRET_KEY_PASSWORD}}' -Psigning.secretKeyRingFile=$(echo ~/.gradle/secring.gpg) --warn --stacktrace
+        run: ./gradlew publish -Psigning.keyId='${{secrets.OSSRH_GPG_SECRET_KEY_ID}}' -Psigning.password='${{secrets.OSSRH_GPG_SECRET_KEY_PASSWORD}}' -Psigning.secretKeyRingFile=$(echo ~/.gradle/secring.gpg) --warn --stacktrace
         env:
           OSSRH_USERNAME: ${{secrets.OSSRH_USERNAME}}
           OSSRH_PASSWORD: ${{secrets.OSSRH_TOKEN}}
           OSSRH_URL: "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
           PUBLISH_TYPE: "CENTRAL"
-          COMMIT_ID: ${{ github.sha }}
-
+          
       # Step 8
       # Optional step, will enable you to see what you have released as well here on GitHub
       - name: Upload Artifacts
