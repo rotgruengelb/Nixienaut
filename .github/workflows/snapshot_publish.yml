@@ -8,6 +8,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Set Short ID
+        id: set_short_id
+        run: |
+          SHORT_ID=$(openssl rand -hex 5)
+          echo "UNIQUE_ID=$SHORT_ID" >> $GITHUB_ENV
+        shell: bash
+    
       # Step 1
       # This is optional and only if you want to set the timezone
       - name: Setup timezone
@@ -58,7 +65,6 @@ jobs:
           OSSRH_PASSWORD: ${{secrets.OSSRH_TOKEN}}
           OSSRH_URL: "https://s01.oss.sonatype.org/content/repositories/snapshots/"
           PUBLISH_TYPE: "SNAPSHOT"
-          COMMIT_ID: ${{github.sha}}
 
       # Step 8
       # Optional step, will enable you to see what you have released as well here on GitHub
