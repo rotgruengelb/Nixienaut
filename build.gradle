@@ -9,10 +9,10 @@ version = "${project.version}"
 
 def ENV = System.getenv()
 def publishType = System.getenv("PUBLISH_TYPE")
-def commitId = System.getenv("COMMIT_ID")
+def uniqueId = System.getenv("UNIQUE_ID")
 
 if (publishType == "SNAPSHOT") {
-    version = "${version}-${commitId}-SNAPSHOT"
+    version = "${version}-${uniqueId}-SNAPSHOT"
 }
 
 repositories {
