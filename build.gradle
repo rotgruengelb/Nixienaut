@@ -1,0 +1,109 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'signing'
+}
+
+group = 'net.rotgruengelb'
+version = "${project.version}"
+
+def ENV = System.getenv()
+def publishType = System.getenv("PUBLISH_TYPE")
+def commitId = System.getenv("COMMIT_ID")
+
+if (publishType == "SNAPSHOT") {
+    version = "${version}-${commitId}-SNAPSHOT"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs << "-Xlint:unchecked"
+}
+
+tasks.register('javadocJar', Jar) {
+    archiveClassifier = 'javadoc'
+    from javadoc
+}
+
+tasks.register('sourcesJar', Jar) {
+    archiveClassifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${project.base.archivesName.get()}"}
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = group
+            artifactId = 'nixienaut'
+            version = "${version}"
+            from components.java
+
+            pom {
+                name = 'nixienaut'
+                description = 'A common code Libary.'
+                url = 'https://github.com/rotgruengelb/nixienaut'
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://opensource.org/license/MIT'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'rotgruengelb'
+                        name = 'Daniel (aka. rotgruengelb)'
+                        email = 'rotgrungelblab@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/rotgruengelb/nixienaut.git'
+                    developerConnection = 'scm:git:ssh://github.com/rotgruengelb/nixienaut.git'
+                    url = 'https://github.com/rotgruengelb/nixienaut/'
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name = "OSSRH"
+            url = System.getenv("OSSRH_URL")
+            credentials {
+                username = System.getenv("OSSRH_USERNAME")
+                password = System.getenv("OSSRH_PASSWORD")
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
