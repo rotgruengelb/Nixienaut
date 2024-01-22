@@ -1,5 +1,7 @@
 package net.rotgruengelb.nixienaut;
 
+import net.rotgruengelb.nixienaut.annotation.PlaceholderValue;
+
 /**
  * This is a dummy class.
  *
@@ -13,6 +15,7 @@ public class Dummy {
      *
      * @see Dummy
      */
+    @PlaceholderValue("TODO")
     public static void _void() {
     }
 }
