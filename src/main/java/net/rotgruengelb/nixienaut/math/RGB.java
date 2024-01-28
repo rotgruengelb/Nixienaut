@@ -1,4 +1,6 @@
-package net.rotgruengelb.nixienaut;
+package net.rotgruengelb.nixienaut.math;
+
+import net.rotgruengelb.nixienaut.Dummy;
 
 /**
  * This class represents an RGB color.<br>
@@ -27,9 +29,9 @@ public class RGB {
 	 * @throws IllegalArgumentException If any of the values are out of range.
 	 */
 	public RGB(int r, int g, int b) {
-		this.r.setValue(r);
-		this.g.setValue(g);
-		this.b.setValue(b);
+		this.r.set(r);
+		this.g.set(g);
+		this.b.set(b);
 	}
 
 	/**
@@ -120,7 +122,7 @@ public class RGB {
 	 * @see RGB#r(int)
 	 */
 	public int r() {
-		return this.r.getValue();
+		return this.r.get();
 	}
 
 	/**
@@ -130,7 +132,7 @@ public class RGB {
 	 * @see RGB#g(int)
 	 */
 	public int g() {
-		return this.g.getValue();
+		return this.g.get();
 	}
 
 	/**
@@ -140,7 +142,7 @@ public class RGB {
 	 * @see RGB#b(int)
 	 */
 	public int b() {
-		return this.b.getValue();
+		return this.b.get();
 	}
 
 	/**
@@ -150,7 +152,7 @@ public class RGB {
 	 * @see RGB#r()
 	 */
 	public void r(int value) {
-		this.r.setValue(value);
+		this.r.set(value);
 	}
 
 	/**
@@ -160,7 +162,7 @@ public class RGB {
 	 * @see RGB#g()
 	 */
 	public void g(int value) {
-		this.g.setValue(value);
+		this.g.set(value);
 	}
 
 	/**
@@ -170,7 +172,7 @@ public class RGB {
 	 * @see RGB#b()
 	 */
 	public void b(int value) {
-		this.b.setValue(value);
+		this.b.set(value);
 	}
 
 }
