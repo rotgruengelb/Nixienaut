@@ -1,0 +1,27 @@
+{
+	"schemaVersion": 1,
+	"id": "nixienaut",
+	"version": "${version}",
+	"name": "Nixienaut",
+	"description": "A common code Libary.",
+	"authors": [
+		"rotgruengelb"
+	],
+	"contact": {
+		"homepage": "https://github.com/rotgruengelb/Nixienaut",
+		"sources": "https://github.com/rotgruengelb/Nixienaut"
+	},
+	"license": "MIT",
+	"icon": "nixienaut.png",
+	"environment": "*",
+	"entrypoints": {},
+	"mixins": [],
+	"depends": {
+		"java": ">=17"
+	},
+	"custom": {
+		"modmenu": {
+			"badges": [ "library" ]
+		}
+	}
+}
