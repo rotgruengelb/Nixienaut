@@ -17,6 +17,24 @@ public enum SimpleElementOperation implements StringIdentifiable, IntIdentifiabl
 		this.stringRepresentation = stringRepresentation;
 	}
 
+	public static SimpleElementOperation fromInt(int i) {
+		for (SimpleElementOperation operation : values()) {
+			if (operation.getIntRepresentation() == i) {
+				return operation;
+			}
+		}
+		return null;
+	}
+
+	public static SimpleElementOperation fromString(String s) {
+		for (SimpleElementOperation operation : values()) {
+			if (operation.getStringRepresentation().equals(s)) {
+				return operation;
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public int getIntRepresentation() {
 		return difference;

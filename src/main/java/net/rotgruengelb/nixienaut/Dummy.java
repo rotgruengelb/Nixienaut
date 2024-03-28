@@ -16,11 +16,14 @@ public class Dummy {
 	 *
 	 * @see Dummy
 	 */
-	public static void _void() {
+	public static void _staticVoid() {
 	}
 
 	@PlaceholderValue("Not implemented yet!")
 	public static void notImplemented() {
 		throw new NotImplementedException();
+	}
+
+	public void _void() {
 	}
 }

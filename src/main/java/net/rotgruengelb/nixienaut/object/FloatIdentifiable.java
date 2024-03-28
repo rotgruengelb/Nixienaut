@@ -2,13 +2,6 @@ package net.rotgruengelb.nixienaut.object;
 
 public interface FloatIdentifiable {
 
-	/**
-	 * The float representation of the object.
-	 *
-	 * @return The float representation of the object.
-	 */
-	float getFloatRepresentation();
-
 	static float getFloatRepresentation(FloatIdentifiable identifiable) {
 		if (identifiable == null) {
 			return Float.NaN;
@@ -28,5 +21,16 @@ public interface FloatIdentifiable {
 			return Float.NaN;
 		}
 		return Float.parseFloat(identifiable.getStringRepresentation());
+	}
+
+	/**
+	 * The float representation of the object.
+	 *
+	 * @return The float representation of the object.
+	 */
+	float getFloatRepresentation();
+
+	default float asFloat() {
+		return getFloatRepresentation();
 	}
 }

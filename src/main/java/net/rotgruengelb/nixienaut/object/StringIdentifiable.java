@@ -2,13 +2,6 @@ package net.rotgruengelb.nixienaut.object;
 
 public interface StringIdentifiable {
 
-	/**
-	 * The string representation of the object.
-	 *
-	 * @return The string representation of the object.
-	 */
-	String getStringRepresentation();
-
 	static String getStringRepresentation(StringIdentifiable identifiable) {
 		if (identifiable == null) {
 			return "";
@@ -28,5 +21,16 @@ public interface StringIdentifiable {
 			return "0.0";
 		}
 		return Float.toString(identifiable.getFloatRepresentation());
+	}
+
+	/**
+	 * The string representation of the object.
+	 *
+	 * @return The string representation of the object.
+	 */
+	String getStringRepresentation();
+
+	default String asString() {
+		return getStringRepresentation();
 	}
 }
