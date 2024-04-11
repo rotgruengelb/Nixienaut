@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class TimeFormatting {
 
-	private static String formatTime(int time, String format) {
+	public static String formatTime(int time, String format) {
 		Map<String, Integer> values = Map.of("d", time / 1728000, "h", (time % 1728000) / 72000, "m", (time % 72000) / 1200, "s", (time % 1200) / 20, "tH", time / 72000, "tM", time / 1200, "tS", time / 20);
 
 		String[] formatSplit = format.split("%");
