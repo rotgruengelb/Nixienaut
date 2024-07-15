@@ -1,4 +1,4 @@
-package net.rotgruengelb.nixienaut;
+package net.rotgruengelb.nixienaut.object;
 
 import net.rotgruengelb.nixienaut.annotation.PlaceholderValue;
 import net.rotgruengelb.nixienaut.exeption.NotImplementedException;
@@ -16,14 +16,10 @@ public class Dummy {
 	 *
 	 * @see Dummy
 	 */
-	public static void _staticVoid() {
-	}
+	public static void _staticVoid() { }
 
 	@PlaceholderValue("Not implemented yet!")
-	public static void notImplemented() {
-		throw new NotImplementedException();
-	}
+	public static void notImplemented() { throw new NotImplementedException(); }
 
-	public void _void() {
-	}
+	public void _void() { }
 }
