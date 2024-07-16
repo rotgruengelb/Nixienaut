@@ -1,0 +1,80 @@
+name: Publish to Maven Central
+
+on: workflow_dispatch
+
+jobs:
+  publish:
+    name: Publish Release Artifacts
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1
+      # This is optional and only if you want to set the timezone
+      - name: Setup timezone
+        run: |
+          sudo timedatectl set-timezone Europe/Berlin
+          timedatectl
+      # Step 2
+      # Required step
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      # Step 3
+      # Optional step
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+      # Step 4
+      # Required step
+      - name: Set up Java 17 JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: 17
+          architecture: x64
+          cache: 'gradle'
+          check-latest: true
+
+      # Step 5
+      # Optional step, but recommended as user often commit the gradle wrapper jar without execute permissions.
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+
+      # Step 6
+      # Required step
+      - name: Decode GPG Key
+        run: |
+          mkdir -p ~/.gradle/
+          echo "${{secrets.OSSRH_GPG_SECRET_KEY}}" > ~/.gradle/secring.gpg.b64
+          base64 -d ~/.gradle/secring.gpg.b64 > ~/.gradle/secring.gpg
+
+      # Step 7
+      # Obviously required step
+      - name: Publish package
+        # wrapped the signing.password with single quotes as the password could contain special characters
+        run: ./gradlew publish -Psigning.keyId='${{secrets.OSSRH_GPG_SECRET_KEY_ID}}' -Psigning.password='${{secrets.OSSRH_GPG_SECRET_KEY_PASSWORD}}' -Psigning.secretKeyRingFile=$(echo ~/.gradle/secring.gpg) --warn --stacktrace
+        env:
+          OSSRH_USERNAME: ${{secrets.OSSRH_USERNAME_A}}
+          OSSRH_PASSWORD: ${{secrets.OSSRH_TOKEN_A}}
+          OSSRH_URL: "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+          PUBLISH_TYPE: "CENTRAL"
+
+      # Step 7.2
+      # Obviously required step
+      - name: Publish package
+        # wrapped the signing.password with single quotes as the password could contain special characters
+        run: ./gradlew publish -Psigning.keyId='${{secrets.OSSRH_GPG_SECRET_KEY_ID}}' -Psigning.password='${{secrets.OSSRH_GPG_SECRET_KEY_PASSWORD}}' -Psigning.secretKeyRingFile=$(echo ~/.gradle/secring.gpg) --warn --stacktrace
+        env:
+          OSSRH_USERNAME: ${{secrets.RGGM_USERNAME}}
+          OSSRH_PASSWORD: ${{secrets.RGGM_TOKEN}}
+          OSSRH_URL: "https://maven.rotgruengelb.net/releases"
+          PUBLISH_TYPE: "CENTRAL"
+          
+      # Step 8
+      # Optional step, will enable you to see what you have released as well here on GitHub
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: release-build-libs
+          path: build/libs
+          retention-days: 3
