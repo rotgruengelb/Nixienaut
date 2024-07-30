@@ -6,7 +6,8 @@ import java.util.function.Consumer;
 
 public class StaticFieldProcessor {
 
-	private static <T> void process(Class<?> clazz, Class<T> type, boolean recursive, Consumer<T> consumer) {
+	public static <T> void process(Class<?> clazz, Class<T> type, boolean recursive,
+			Consumer<T> consumer) {
 		for (Field field : clazz.getDeclaredFields()) {
 			if (Modifier.isStatic(field.getModifiers()) && type.isAssignableFrom(field.getType())) {
 				try {
