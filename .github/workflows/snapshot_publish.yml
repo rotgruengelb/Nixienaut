@@ -69,7 +69,7 @@ jobs:
       # Step 8
       # Optional step, will enable you to see what you have released as well here on GitHub
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: release-build-libs
           path: build/libs
